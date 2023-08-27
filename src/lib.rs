@@ -1,11 +1,9 @@
-use neon::prelude::*;
+mod fetcher;
 
-fn get_num_cpus(mut cx: FunctionContext) -> JsResult<JsNumber> {
-    Ok(cx.number(10))
-}
+use neon::prelude::*;
 
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
-    cx.export_function("get", get_num_cpus)?;
+    cx.export_class("FetcherBuilder", fetcher::FetcherBuilder::register)?;
     Ok(())
 }

@@ -20,7 +20,8 @@
     "build-debug": "npm run build --",
     "build-release": "npm run build -- --release",
     "install": "npm run build-release",
-    "test": "cargo test"
+    "test": "cargo test",
+    "scrap": "npm run build && node scrap.js"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^1.0.3",
