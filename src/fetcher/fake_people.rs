@@ -1,10 +1,10 @@
-use crate::fetcher::FetcherEngine;
+// use crate::fetcher::FetcherEngine;
 
-pub struct Engine {
-}
+// pub struct Engine {
+// }
 
-impl FetcherEngine for Engine {
-    fn fetch<Query, Result>(&self, query: Query) -> Vec<Result> {
-        vec![]
-    }
-}
+// impl FetcherEngine for Engine {
+//     fn fetch<Query, Result>(&self, query: Query) -> Vec<Result> {
+//         vec![]
+//     }
+// }
