@@ -16,7 +16,7 @@
     .root {
         transition-duration: $animation-duration;
         cursor: pointer;
-        font: $font;
+        font: $font-primary;
         display: flex;
         align-items: center;
         padding: $padding;
@@ -38,11 +38,12 @@
 
         &.secondary {
             color: $text-secondary;
-            outline: $stroke;
+            outline: $no-stroke;
 
             &:hover {
                 background: $control-irritated;
                 color: $text-primary;
+                outline: $stroke;
 
                 &:active {
                     color: $text-secondary;

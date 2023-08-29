@@ -14,6 +14,7 @@
         display: flex;
         flex: 1;
         gap: $stroke-width;
+        width: 100%;
 
         &.row { flex-direction: row; }
         &.column { flex-direction: column; }
