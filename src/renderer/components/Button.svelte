@@ -1,9 +1,13 @@
 <script lang="ts">
     export let type: "primary" | "secondary" = "secondary";
+    export let on_click: () => void = () => {};
+    export let text: string | undefined = undefined;
+    export let icon: string | undefined = undefined;
 </script>
 
-<div class={`root ${type}`}>
-    <slot />
+<div class={`root ${type}`} on:click={on_click}>
+    {#if icon} {icon} {/if}
+    {#if text} {text} {/if}
 </div>
 
 <style lang="scss">
@@ -12,12 +16,12 @@
     .root {
         transition-duration: $animation-duration;
         cursor: pointer;
-        padding: $padding;
         font: $font;
         display: flex;
-        border-radius: $control-radius;
         align-items: center;
+        padding: $padding;
         justify-content: center;
+        gap: $padding-horizontal;
 
         &.primary {
             color: $accent-text-primary;
@@ -34,15 +38,13 @@
 
         &.secondary {
             color: $text-secondary;
-            border: $no-stroke;
+            outline: $stroke;
 
             &:hover {
                 background: $control-irritated;
                 color: $text-primary;
-                border: $stroke;
 
                 &:active {
-                    border: $stroke-secondary;
                     color: $text-secondary;
                     background: $control-clicked;
                 }

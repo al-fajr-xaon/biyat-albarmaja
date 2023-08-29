@@ -17,8 +17,8 @@ $stroke-secondary-color: #e9e9e9;
 $stroke-secondary-width: 1px;
 $stroke-secondary: $stroke-secondary-color solid $stroke-secondary-width;
 
-$padding-vertical: 8px;
-$padding-horizontal: 8px;
+$padding-vertical: 10px;
+$padding-horizontal: 10px;
 $padding: $padding-vertical $padding-horizontal;
 
 $font-size: 10px;
@@ -33,9 +33,6 @@ $control-irritated: rgba(0, 0, 0, 5%);
 $control-clicked: rgba(0, 0, 0, 2%);
 
 $animation-duration: 150ms;
-
-$window-radius: 3px;
-$control-radius: 3px;
 
 $accent-text-primary: #FFFFFF;
 $accent-text-secondary: #d1d1d1;
