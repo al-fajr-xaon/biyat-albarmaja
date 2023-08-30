@@ -5,7 +5,7 @@ $surface-root: #000000;
 $surface-primary: #FFFFFF;
 $surface-secondary: #F8F8F8;
 
-$stroke-color: #DBDBDB;
+$stroke-color: rgba(0, 0, 0, 10%);
 $stroke-width: 1px;
 $stroke: $stroke-color solid $stroke-width;
 
@@ -13,12 +13,8 @@ $no-stroke-color: transparent;
 $no-stroke-width: 1px;
 $no-stroke: $no-stroke-color solid $no-stroke-width;
 
-$stroke-secondary-color: #e9e9e9;
-$stroke-secondary-width: 1px;
-$stroke-secondary: $stroke-secondary-color solid $stroke-secondary-width;
-
-$padding-vertical: 15px;
-$padding-horizontal: 15px;
+$padding-vertical: 5px;
+$padding-horizontal: 5px;
 $padding: $padding-vertical $padding-horizontal;
 
 $font-size: 9px;
@@ -39,3 +35,6 @@ $accent-text-secondary: #d1d1d1;
 
 $accent-primary: #000000;
 $accent-secondary: #505050;
+
+$panel-radius: 3px;
+$control-radius: 3px;

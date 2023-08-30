@@ -37,22 +37,58 @@
     .root {
         display: flex;
         color: $text-primary;
-        flex: 1;
-        width: 100%;
-
-        &:focus-within {
-            background: $surface-primary;
+        padding: $padding;
+        background: $surface-primary;
+        position: relative;
+        border-radius: $control-radius;
+        border: $stroke;
+        width: 500px;
+        
+        &:after {
+            content: "";
+            display: flex;
+            position: absolute;
+            bottom: 1px;
+            left: 50%;
+            height: 3px;
+            background: $accent-primary;
+            border-radius: 1.5px;
+            transform: translate(-50%);
+            transition-duration: $animation-duration;
+            pointer-events: none;
+            width: 0;
+            opacity: 0;
         }
 
-        input {
-            margin: 0;
-            padding: $padding;
-            border: none;
-            outline: none;
+        &:hover {
+            &:after {
+                width: 25%;
+                opacity: 1;
+            }
+        }
+
+        &:focus-within {
+            &:after {
+                opacity: 1;
+                width: 50%;
+            }
+        }
+
+        .input {
             display: flex;
-            background: transparent;
-            color: inherit;
-            width: 100%;
+            flex: 1;
+
+            input {
+                margin: 0;
+                padding: $padding;
+                border: none;
+                outline: none;
+                display: flex;
+                background: transparent;
+                color: inherit;
+                width: 100%;
+                font: $font-primary;
+            }
         }
     }
 </style>

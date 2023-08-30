@@ -1,49 +1,113 @@
 <script lang="ts">
   import Button from "./components/Button.svelte"
-  import DefinedContentArea from "./components/DefinedContentArea.svelte"
   import DefinedRow from "./components/DefinedRow.svelte"
-  import Dragger from "./components/Dragger.svelte"
-  import EqualSection from "./components/EqualSection.svelte";
   import Input from "./components/Input.svelte"
   import Text from "./components/Text.svelte"
+  import EqualSectionItem from "./components/EqualSectionItem.svelte";
+  import Tabs from "./components/Tabs.svelte"
+  import DefinedContentArea from "./components/DefinedContentArea.svelte"
+  import ItemList from "./components/ItemList.svelte"
+  import VR from "./components/VR.svelte"
+
+  let active = "Project";
 </script>
 
 <div class="root">
-    <DefinedRow>
-        <EqualSection>
-            <EqualSection>
-                <Text>AFxTD64</Text>
+    <DefinedRow titlebar={true}>
+        <div>
+            <Text>AQXENN {"<-"} Main AQxTP64</Text>
+    
+            <Tabs tabs={[
+                {
+                    name: "Project"
+                },
+                {
+                    name: "Frames"
+                },
+                {
+                    name: "Help"
+                },
+                {
+                    name: "Settings"
+                }
+            ]} bind:active={active} />
+        </div>
+        
+        <div>
+            <Input type="search" />
+        </div>
 
-                <Button text="Project" />
-                <Button text="Settings" />
-            </EqualSection>
-            
-            <EqualSection align="center">
-                <Input type="search" />
-            </EqualSection>
-
-            <EqualSection align="end">
-                <Dragger />
-
+        <div>
+            <EqualSectionItem>
                 <Button text="Minimize" />
-                <Button text="Close" type="primary" />
-            </EqualSection>
-        </EqualSection>
+                <VR />
+                <Button text="Size" />
+                <VR />
+                <Button text="Close" />
+            </EqualSectionItem>
+        </div>
     </DefinedRow>
 
-    <EqualSection>
-        <DefinedContentArea flex={1}>
-            Side Bar
-        </DefinedContentArea>
+    {#if active == "Project"}
+        <div class="window">
+            <DefinedContentArea>
+                <DefinedRow slot="header">
+                    <Tabs tabs={[
+                        { name: "Source" },
+                        { name: "Design" },
+                        { name: "Preview" }
+                    ]} />
+                </DefinedRow>
 
-        <DefinedContentArea flex={2}>
-            Side Bar
-        </DefinedContentArea>
+                Hello World
+            </DefinedContentArea>
 
-        <DefinedContentArea flex={1}>
-            Side Bar
-        </DefinedContentArea>
-    </EqualSection>
+            <DefinedContentArea flex={3}>
+                <DefinedRow slot="header">
+                    <Tabs tabs={[
+                        { name: "Main.QB" },
+                        { name: "Search = \"Theme\"" },
+                    ]} />
+                </DefinedRow>
+            </DefinedContentArea>
+
+            <DefinedContentArea>
+                <DefinedRow slot="header">
+                    <Tabs tabs={[
+                        { name: "Tasks" },
+                        { name: "Tests" },
+                        { name: "Tools" }
+                    ]} />
+                </DefinedRow>
+
+                <ItemList items={[
+                    {
+                        label: "Compile Main.QB",
+                        actions: [
+                            {
+                                label: "Compile"
+                            }
+                        ]
+                    },
+                    {
+                        label: "Run Main.QB"
+                    }
+                ]} />
+            </DefinedContentArea>
+        </div>
+    {:else if active == "Frames"}
+        <div>
+            <Text type="header">Frames</Text>
+        </div>
+    {:else if active == "Help"}
+        <div>
+            <Text type="header">Help</Text>
+        </div>
+    {:else if active == "Settings"}
+        <div>
+            <Text type="header">Settings</Text>
+        </div>
+    {/if}
 </div>
 
 <style lang="scss">
@@ -57,6 +121,25 @@
         flex-direction: column;
         align-items: flex-start; 
         position: fixed;
-        gap: $stroke-width;
+        gap: $padding-vertical;
+        padding: $padding;
+
+        .window {
+            width: 100%;
+        }
+
+        div {
+            display: flex;
+            gap: $padding-horizontal;
+            flex: 1;
+
+            &:nth-child(2) {
+                justify-content: center;
+            }
+
+            &:nth-child(3) {
+                justify-content: flex-end;
+            }
+        }
     }
 </style>

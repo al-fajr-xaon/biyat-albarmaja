@@ -1,10 +1,8 @@
 <script lang="ts">
-    import EqualSection from "./EqualSection.svelte";
-
-    export { EqualSection }
+    export let titlebar = false;
 </script>
   
-<div class="root">
+<div class={`root ${titlebar ? "drag" : ""}`}>
     <slot />
 </div>
   
@@ -14,8 +12,13 @@
     .root {
         display: flex;
         flex-direction: row;
-        gap: $stroke-width;
-        outline: $stroke;
+        gap: $padding-horizontal;
         width: 100%;
+        justify-content: space-between;
+        -webkit-app-region: no-drag;
+
+        &.drag {
+            -webkit-app-region: drag;
+        }
     }
 </style>

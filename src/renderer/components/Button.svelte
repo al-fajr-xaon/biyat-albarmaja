@@ -6,8 +6,12 @@
 </script>
 
 <div class={`root ${type}`} on:click={on_click}>
-    {#if icon} {icon} {/if}
-    {#if text} {text} {/if}
+    {#if icon} 
+        <div class="icon">{icon}</div>
+    {/if}
+    {#if text} 
+        <div class="text">{text}</div>
+    {/if}
 </div>
 
 <style lang="scss">
@@ -22,6 +26,12 @@
         padding: $padding;
         justify-content: center;
         gap: $padding-horizontal;
+        border-radius: $control-radius;
+        user-select: none;
+
+        .text, .icon {
+            padding: $padding;
+        }
 
         &.primary {
             color: $accent-text-primary;
@@ -38,12 +48,11 @@
 
         &.secondary {
             color: $text-secondary;
-            outline: $no-stroke;
+            border: $no-stroke;
 
             &:hover {
                 background: $control-irritated;
                 color: $text-primary;
-                outline: $stroke;
 
                 &:active {
                     color: $text-secondary;

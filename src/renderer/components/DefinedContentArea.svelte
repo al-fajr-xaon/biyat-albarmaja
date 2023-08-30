@@ -3,7 +3,13 @@
 </script>
   
 <div class="root" style={`flex: ${flex}`}>
-    <slot />
+    <div class="header">
+        <slot name="header" />
+    </div>
+
+    <div class="main">
+        <slot />
+    </div>
 </div>
   
 <style lang="scss">
@@ -11,10 +17,20 @@
   
     .root {
         display: flex;
-        background: $surface-primary;
+        background: $surface-secondary;
         width: 100%;
         height: 100%;
         flex-direction: column;
-        outline: $stroke;
+        gap: $padding-vertical;
+        font: $font-primary;
+        color: $text-primary;
+
+        .main {
+            padding: $padding;
+            background: $surface-primary;
+            border-radius: $panel-radius;
+            height: 100%;
+            border: $stroke;
+        }
     }
 </style>

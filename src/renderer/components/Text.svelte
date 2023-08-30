@@ -24,10 +24,12 @@
     .root {
         display: flex;
         padding: $padding;
+        align-items: center;
+        align-self: flex-start;
 
         p, h1, span {
             margin: 0;
-            padding: 0;
+            padding: $padding;
         }
 
         p {

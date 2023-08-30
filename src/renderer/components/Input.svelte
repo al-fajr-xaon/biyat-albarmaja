@@ -26,7 +26,6 @@
   
     .root {
         display: flex;
-        outline: $stroke;
-        flex: 1;
+        -webkit-app-region: no-drag;
     }
 </style>
