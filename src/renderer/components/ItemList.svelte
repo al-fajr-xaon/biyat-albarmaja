@@ -135,9 +135,12 @@
                     flex-direction: column;
                     gap: $padding-vertical;
                     color: $text-secondary;
+                    padding: $padding;
+                    border-radius: $control-radius;
 
                     .title {
                         font: $font-primary;
+                        padding: $padding;
                         color: $text-primary;
                     }
                 }
@@ -164,6 +167,10 @@
                         }
                     }
                 }
+            }
+
+            &:hover {
+                background: $control-irritated;
             }
 
             &.has-actions {

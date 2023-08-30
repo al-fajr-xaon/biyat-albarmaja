@@ -90,6 +90,7 @@
 
             span {
                 padding: $padding;
+                white-space: nowrap;
             }
         }
     }

@@ -28,6 +28,7 @@
         align-items: center;
         align-self: flex-start;
         -webkit-app-region: no-drag;
+        user-select: none;
 
         p, h1, span {
             margin: 0;

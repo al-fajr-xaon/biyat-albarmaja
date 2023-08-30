@@ -80,9 +80,9 @@
                         busy = false;
                         join = false;
                         leave = false;
-                    }, animation_duration);
-                }, animation_duration);
-            }, animation_duration);
+                    }, animation_duration / 3);
+                }, animation_duration / 3);
+            }, animation_duration / 3);
         }
     }
 </script>
@@ -114,7 +114,7 @@
         width: 100%;
 
         &.enable-transition {
-            transition-duration: calc($animation-duration);
+            transition-duration: calc($animation-duration / 3);
         }
 
         &.hide {
@@ -122,12 +122,12 @@
         }
 
         &.leave {
-            transform: scale(0.8);
+            transform: translateX(-$padding-horizontal);
             opacity: 0;
         }
 
         &.join {
-            transform: scale(1.2);
+            transform: translateX($padding-horizontal);
             opacity: 0;
         }
     }

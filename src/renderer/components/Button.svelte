@@ -31,6 +31,7 @@
 
         .text, .icon {
             padding: $padding;
+            white-space: nowrap;
         }
 
         &.primary {

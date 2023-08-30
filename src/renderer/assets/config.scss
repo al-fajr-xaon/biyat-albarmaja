@@ -13,15 +13,15 @@ $no-stroke-color: transparent;
 $no-stroke-width: 1px;
 $no-stroke: $no-stroke-color solid $no-stroke-width;
 
-$padding-vertical: 6px;
-$padding-horizontal: 6px;
+$padding-vertical: 5px;
+$padding-horizontal: 5px;
 $padding: $padding-vertical $padding-horizontal;
 
-$font-size: 9px;
+$font-size: 8px;
 $font-family: Montserrat;
 $font: $font-size $font-family;
 
-$font-primary-size: 11px;
+$font-primary-size: 10px;
 $font-primary-family: Montserrat;
 $font-primary: $font-primary-size $font-primary-family;
 
@@ -36,8 +36,8 @@ $accent-text-secondary: #d1d1d1;
 $accent-primary: #000000;
 $accent-secondary: #505050;
 
-$panel-radius: 6px;
-$control-radius: 6px;
+$panel-radius: 3px;
+$control-radius: 3px;
 
 // Dark
 // $text-primary: #FFFFFF;

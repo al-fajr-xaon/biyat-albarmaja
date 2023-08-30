@@ -61,6 +61,7 @@
         -webkit-app-region: no-drag;
         border: $stroke;
         flex: 1;
+        width: 400px;
         
         &:after {
             content: "";

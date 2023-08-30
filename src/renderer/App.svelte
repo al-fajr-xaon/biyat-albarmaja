@@ -13,13 +13,15 @@
   import Project from "./pages/Project.svelte"
   import Frames from "./pages/Frames.svelte"
   import Information from "./pages/Information.svelte"
+  import VersionControl from "./pages/VersionControl.svelte"
 
     let active = "Project";
     let tabs = [
         { name: "Project" },
         { name: "Frames" },
         { name: "Settings" },
-        { name: "Information" }
+        { name: "Information" },
+        { name: "Version Control" }
     ]
 </script>
 
@@ -28,7 +30,9 @@
         <DefinedRow slot="header" titlebar={true}>
             <HorizontalSection>
                 <Text line={true}>Integrated Development Environment</Text>
+            </HorizontalSection>
 
+            <HorizontalSection>
                 <Tabs tabs={tabs} bind:active={active} />
             </HorizontalSection>
 
@@ -52,6 +56,7 @@
             <Frames slot="tab-1" />
             <Settings slot="tab-2" />
             <Information slot="tab-3" />
+            <VersionControl slot="tab-4" />
         </ServiceHost>
     </DefinedContentArea>
 </div>

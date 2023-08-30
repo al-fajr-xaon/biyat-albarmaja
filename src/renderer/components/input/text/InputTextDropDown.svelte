@@ -3,11 +3,11 @@
     import type { DropDown } from "../../item-list/drop_down";
     import ItemList from "../../ItemList.svelte"
     import Text from "../../Text.svelte";
-  import Hr from "../../HR.svelte"
-  import DefinedContentArea from "../../DefinedContentArea.svelte"
-  import Tabs from "../../Tabs.svelte"
-  import DefinedRow from "../../DefinedRow.svelte"
-  import HorizontalSection from "../../HorizontalSection.svelte"
+    import Hr from "../../HR.svelte"
+    import DefinedContentArea from "../../DefinedContentArea.svelte"
+    import Tabs from "../../Tabs.svelte"
+    import DefinedRow from "../../DefinedRow.svelte"
+    import HorizontalSection from "../../HorizontalSection.svelte"
 
     export let items: DropDown[] = [];
     export let for_element: HTMLElement;
@@ -65,6 +65,7 @@
         background: $surface-secondary;
         transition: opacity $animation-duration ease-in-out, transform $animation-duration ease-in-out;
         overflow: hidden;
+        z-index: 100;
 
         &.hide {
             opacity: 0;
