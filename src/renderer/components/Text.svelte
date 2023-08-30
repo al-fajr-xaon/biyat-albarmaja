@@ -1,8 +1,9 @@
 <script lang="ts">
     export let type: "paragraph" | "sub title" | "header" = "paragraph";
+    export let line = false;
 </script>
 
-<div class="root">
+<div class={`root ${line ? "lined" : ""}`}>
     {#if type == "paragraph"}
         <p>
             <slot />
@@ -26,10 +27,17 @@
         padding: $padding;
         align-items: center;
         align-self: flex-start;
+        -webkit-app-region: no-drag;
 
         p, h1, span {
             margin: 0;
             padding: $padding;
+        }
+
+        &.lined {
+            p, h1, span {
+                white-space: nowrap;
+            }
         }
 
         p {

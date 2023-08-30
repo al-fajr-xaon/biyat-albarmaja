@@ -1,9 +1,11 @@
 <script lang="ts">
     export let flex = 1;
+
+    export let header: HTMLElement | undefined = undefined;
 </script>
   
 <div class="root" style={`flex: ${flex}`}>
-    <div class="header">
+    <div class={`header ${header?.innerHTML == "" ? "hide" : ""}`} bind:this={header}>
         <slot name="header" />
     </div>
 
@@ -21,16 +23,31 @@
         width: 100%;
         height: 100%;
         flex-direction: column;
-        gap: $padding-vertical;
         font: $font-primary;
         color: $text-primary;
+        border: $stroke;
+        border-radius: $control-radius;
+        overflow: hidden;
+
+        .header {
+            padding: $padding;
+        }
 
         .main {
+            display: flex;
             padding: $padding;
             background: $surface-primary;
-            border-radius: $panel-radius;
             height: 100%;
-            border: $stroke;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            gap: $padding-vertical;
+        }
+
+        .header.hide {
+            opacity: 0;
+            pointer-events: none;
+            position: fixed;
         }
     }
 </style>

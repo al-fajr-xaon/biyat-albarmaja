@@ -4,32 +4,73 @@
     import Button from "./Button.svelte";
     import HR from "./HR.svelte"
     import VR from "./VR.svelte"
+    import DefinedRow from "./DefinedRow.svelte"
+    import HorizontalSection from "./HorizontalSection.svelte"
+    import Text from "./Text.svelte"
 
     export let items: DropDown[] = [];
 </script>
   
 <div class="root">
     {#each items as item, index}
-        <div class={`item ${(item.actions && item.actions.length == 0 || !item.actions) ? "" : "has-actions"}`} on:click={() => {
+        <div class={`item ${false ? "" : "has-actions"}`} on:click={() => {
             if (item.on_click && (item.actions && item.actions.length == 0)) {
                 item.on_click();
             }
         }}>
             <div class="info">
-                {#if item.icon}
-                    <div class="icon">
-                        <img src="https://www.nicepng.com/png/detail/343-3437509_black-office-icon-microsoft-office-icon-black.png" />
-                    </div>
-                {/if}
+                <HorizontalSection>
+                    {#if item.icon}
+                        <div class="icon">
+                            <img src="https://www.nicepng.com/png/detail/343-3437509_black-office-icon-microsoft-office-icon-black.png" />
+                        </div>
+                    {/if}
 
-                <div class="text">
-                    <span class="title">{ item.label }</span>
-                    {#if item.description } <span>{ item.description }</span> {/if}
-                </div>
+                    <div class="text">
+                        <span class="title">{ item.label }</span>
+                        {#if item.description } <span>{ item.description }</span> {/if}
+                    </div>
+                </HorizontalSection>
+
+                {#if item.onDelete || item.onOpen}
+                    <HorizontalSection align="right">
+                        <EqualSectionItem>
+                            {#if item.onDelete}
+                                <Button text="Delete" on_click={item.onDelete} />
+                            {/if}
+
+                            {#if item.onDelete && item.onOpen}
+                                <VR />
+                            {/if}
+
+                            {#if item.onOpen}
+                                <Button text="Open" on_click={item.onOpen} />
+                            {/if}
+                        </EqualSectionItem>
+                    </HorizontalSection>
+                {/if}
             </div>
 
-            {#if item.actions}
+            {#if item.actions || item.tags}
                 <div class="actions">
+                    {#if item.tags}
+                        <div class="tags">
+                            <HorizontalSection>
+                                <EqualSectionItem>
+                                    {#each item.tags as tag, index}
+                                        <div>
+                                            <span>{tag}</span>
+                                        </div>
+                
+                                        {#if index != item.tags.length - 1}
+                                            <VR />
+                                        {/if}
+                                    {/each}
+                                </EqualSectionItem>
+                            </HorizontalSection>
+                        </div>
+                    {/if}
+
                     {#if item.actions}
                         <EqualSectionItem>
                             {#each item.actions as action, index}
@@ -59,19 +100,23 @@
         flex: 1;
         gap: $padding-vertical;
         flex-direction: column;
+        width: 100%;
 
         .item {
             transition-duration: $animation-duration;
             cursor: pointer;
             display: flex;
             flex: 1;
-            gap: $stroke-width;
+            gap: $padding-vertical;
             padding: $padding;
             user-select: none;
             flex-direction: column;
             border-radius: $control-radius;
 
             .info {
+                display: flex;
+                flex-direction: row;
+
                 .icon {
                     align-items: center;
                     justify-content: center;
@@ -89,7 +134,6 @@
                     display: flex;
                     flex-direction: column;
                     gap: $padding-vertical;
-                    padding: $padding;
                     color: $text-secondary;
 
                     .title {
@@ -102,24 +146,28 @@
             .actions {
                 display: flex;
                 flex-direction: row;
-                padding: $padding;
-                justify-content: flex-end;
-            }
+                justify-content: space-between;
 
-            &:hover {
-                background: $control-irritated;
+                .tags {
+                    display: flex;
+                    font: $font;
+                    color: $text-secondary;
 
-                &:active {
-                    background: $control-clicked;
+                    div {
+                        padding: $padding;
+                        border-radius: $control-radius;
+                        color: $text-primary;
+                        display: flex;
+
+                        span {
+                            padding: $padding;
+                        }
+                    }
                 }
             }
 
             &.has-actions {
                 cursor: default;
-                
-                &:hover {
-                    background: $control-irritated;
-                }
             }
         }
     }

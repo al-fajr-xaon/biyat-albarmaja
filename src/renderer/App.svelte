@@ -1,146 +1,59 @@
 <script lang="ts">
   import Button from "./components/Button.svelte"
   import DefinedRow from "./components/DefinedRow.svelte"
-  import Input from "./components/Input.svelte"
   import Text from "./components/Text.svelte"
   import EqualSectionItem from "./components/EqualSectionItem.svelte";
   import Tabs from "./components/Tabs.svelte"
   import DefinedContentArea from "./components/DefinedContentArea.svelte"
-  import ItemList from "./components/ItemList.svelte"
   import VR from "./components/VR.svelte"
+  import HorizontalSection from "./components/HorizontalSection.svelte"
+  import InputText from "./components/input/InputText.svelte"
+  import ServiceHost from "./components/tabs/ServiceHost.svelte"
+  import Settings from "./pages/Settings.svelte"
+  import Project from "./pages/Project.svelte"
+  import Frames from "./pages/Frames.svelte"
+  import Information from "./pages/Information.svelte"
 
-  let active = "Project";
+    let active = "Project";
+    let tabs = [
+        { name: "Project" },
+        { name: "Frames" },
+        { name: "Settings" },
+        { name: "Information" }
+    ]
 </script>
 
 <div class="root">
-    <DefinedRow titlebar={true}>
-        <div>
-            <Text>AQXENN {"<-"} Main AQxTP64</Text>
-    
-            <Tabs tabs={[
-                {
-                    name: "Project"
-                },
-                {
-                    name: "Frames"
-                },
-                {
-                    name: "Help"
-                },
-                {
-                    name: "Settings"
-                }
-            ]} bind:active={active} />
-        </div>
-        
-        <div>
-            <Input type="search" />
-        </div>
+    <DefinedContentArea>
+        <DefinedRow slot="header" titlebar={true}>
+            <HorizontalSection>
+                <Text line={true}>Integrated Development Environment</Text>
 
-        <div>
-            <EqualSectionItem>
-                <Button text="Minimize" />
-                <VR />
-                <Button text="Size" />
-                <VR />
-                <Button text="Close" />
-            </EqualSectionItem>
-        </div>
-    </DefinedRow>
+                <Tabs tabs={tabs} bind:active={active} />
+            </HorizontalSection>
 
-    {#if active == "Project"}
-        <div class="main">
-            <div class="window">
-                <DefinedContentArea>
-                    <DefinedRow slot="header">
-                        <Tabs tabs={[
-                            { name: "Source" },
-                            { name: "Design" },
-                            { name: "Preview" }
-                        ]} />
-                    </DefinedRow>
-    
-                    Hello World
-                </DefinedContentArea>
-    
-                <DefinedContentArea flex={3}>
-                    <DefinedRow slot="header">
-                        <Tabs tabs={[
-                            { name: "Main.QB" },
-                            { name: "Search = \"Theme\"" },
-                        ]} />
-                    </DefinedRow>
-                </DefinedContentArea>
-    
-                <DefinedContentArea>
-                    <DefinedRow slot="header">
-                        <Tabs tabs={[
-                            { name: "Tasks" },
-                            { name: "Tests" },
-                            { name: "Tools" }
-                        ]} />
-                    </DefinedRow>
-    
-                    <ItemList items={[
-                        {
-                            label: "Compile Main.QB"
-                        },
-                        {
-                            label: "Run Main.QB"
-                        },
-                        {
-                            label: "Emulation Host",
-                            actions: [
-                                {
-                                    label: "Restart"
-                                },
-                                {
-                                    label: "Terminate"
-                                }
-                            ]
-                        }
-                    ]} />
-                </DefinedContentArea>
-            </div>
+            <HorizontalSection align="center">
+                <InputText search={true} placeholder={"App-wide search"} />
+            </HorizontalSection>
 
-            <div class="tools">
-                <div class="tool">
-                    <DefinedContentArea>
-                        <DefinedRow slot="header">
-                            <div>
-                                <Text>Emulation Host</Text>
-                            
-                                <Tabs tabs={[
-                                    { name: "General" },
-                                    { name: "Serial Console" },
-                                    { name: "Memory" }
-                                ]} />
-                            </div>
+            <HorizontalSection align="right">
+                <EqualSectionItem>
+                    <Button text="Minimize" />
+                    <VR />
+                    <Button text="Rescale" />
+                    <VR />
+                    <Button text="Close" />
+                </EqualSectionItem>
+            </HorizontalSection>
+        </DefinedRow>
 
-                            <EqualSectionItem>
-                                <Button text="Close" />
-                            </EqualSectionItem>
-                        </DefinedRow>
-
-                        <Text>Status = Running</Text>
-                        <Text>Loaded = No</Text>
-                    </DefinedContentArea>
-                </div>
-            </div>
-        </div>
-    {:else if active == "Frames"}
-        <div>
-            <Text type="header">Frames</Text>
-        </div>
-    {:else if active == "Help"}
-        <div>
-            <Text type="header">Help</Text>
-        </div>
-    {:else if active == "Settings"}
-        <div>
-            <Text type="header">Settings</Text>
-        </div>
-    {/if}
+        <ServiceHost active={active} tabs={tabs}>
+            <Project slot="tab-0" />
+            <Frames slot="tab-1" />
+            <Settings slot="tab-2" />
+            <Information slot="tab-3" />
+        </ServiceHost>
+    </DefinedContentArea>
 </div>
 
 <style lang="scss">
@@ -155,45 +68,5 @@
         align-items: flex-start; 
         position: fixed;
         gap: $padding-vertical;
-        padding: $padding;
-
-        .main {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-
-            .window {
-                width: 100%;
-                flex: 2;
-            }
-
-            .tools {
-                width: 100%;
-                display: flex;
-                flex: 1;
-                gap: $padding-horizontal;
-                justify-content: flex-start;
-                overflow: auto;
-
-                .tool {
-                    min-width: 500px;
-                    max-width: 500px;
-                }
-            }
-        }
-
-        div {
-            display: flex;
-            gap: $padding-horizontal;
-            flex: 1;
-
-            &:nth-child(2) {
-                justify-content: center;
-            }
-
-            &:nth-child(3) {
-                justify-content: flex-end;
-            }
-        }
     }
 </style>
