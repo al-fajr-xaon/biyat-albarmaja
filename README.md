@@ -1,1 +1,1 @@
-<img src="./src/renderer/assets/adrenaline.png" width="100%">
+<img src="./src/renderer/assets/adrenaline.svg" width="100%">
