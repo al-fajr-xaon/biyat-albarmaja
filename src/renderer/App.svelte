@@ -49,51 +49,84 @@
     </DefinedRow>
 
     {#if active == "Project"}
-        <div class="window">
-            <DefinedContentArea>
-                <DefinedRow slot="header">
-                    <Tabs tabs={[
-                        { name: "Source" },
-                        { name: "Design" },
-                        { name: "Preview" }
+        <div class="main">
+            <div class="window">
+                <DefinedContentArea>
+                    <DefinedRow slot="header">
+                        <Tabs tabs={[
+                            { name: "Source" },
+                            { name: "Design" },
+                            { name: "Preview" }
+                        ]} />
+                    </DefinedRow>
+    
+                    Hello World
+                </DefinedContentArea>
+    
+                <DefinedContentArea flex={3}>
+                    <DefinedRow slot="header">
+                        <Tabs tabs={[
+                            { name: "Main.QB" },
+                            { name: "Search = \"Theme\"" },
+                        ]} />
+                    </DefinedRow>
+                </DefinedContentArea>
+    
+                <DefinedContentArea>
+                    <DefinedRow slot="header">
+                        <Tabs tabs={[
+                            { name: "Tasks" },
+                            { name: "Tests" },
+                            { name: "Tools" }
+                        ]} />
+                    </DefinedRow>
+    
+                    <ItemList items={[
+                        {
+                            label: "Compile Main.QB"
+                        },
+                        {
+                            label: "Run Main.QB"
+                        },
+                        {
+                            label: "Emulation Host",
+                            actions: [
+                                {
+                                    label: "Restart"
+                                },
+                                {
+                                    label: "Terminate"
+                                }
+                            ]
+                        }
                     ]} />
-                </DefinedRow>
+                </DefinedContentArea>
+            </div>
 
-                Hello World
-            </DefinedContentArea>
+            <div class="tools">
+                <div class="tool">
+                    <DefinedContentArea>
+                        <DefinedRow slot="header">
+                            <div>
+                                <Text>Emulation Host</Text>
+                            
+                                <Tabs tabs={[
+                                    { name: "General" },
+                                    { name: "Serial Console" },
+                                    { name: "Memory" }
+                                ]} />
+                            </div>
 
-            <DefinedContentArea flex={3}>
-                <DefinedRow slot="header">
-                    <Tabs tabs={[
-                        { name: "Main.QB" },
-                        { name: "Search = \"Theme\"" },
-                    ]} />
-                </DefinedRow>
-            </DefinedContentArea>
+                            <EqualSectionItem>
+                                <Button text="Close" />
+                            </EqualSectionItem>
+                        </DefinedRow>
 
-            <DefinedContentArea>
-                <DefinedRow slot="header">
-                    <Tabs tabs={[
-                        { name: "Tasks" },
-                        { name: "Tests" },
-                        { name: "Tools" }
-                    ]} />
-                </DefinedRow>
-
-                <ItemList items={[
-                    {
-                        label: "Compile Main.QB",
-                        actions: [
-                            {
-                                label: "Compile"
-                            }
-                        ]
-                    },
-                    {
-                        label: "Run Main.QB"
-                    }
-                ]} />
-            </DefinedContentArea>
+                        <Text>Status = Running</Text>
+                        <Text>Loaded = No</Text>
+                    </DefinedContentArea>
+                </div>
+            </div>
         </div>
     {:else if active == "Frames"}
         <div>
@@ -124,8 +157,29 @@
         gap: $padding-vertical;
         padding: $padding;
 
-        .window {
+        .main {
             width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .window {
+                width: 100%;
+                flex: 2;
+            }
+
+            .tools {
+                width: 100%;
+                display: flex;
+                flex: 1;
+                gap: $padding-horizontal;
+                justify-content: flex-start;
+                overflow: auto;
+
+                .tool {
+                    min-width: 500px;
+                    max-width: 500px;
+                }
+            }
         }
 
         div {

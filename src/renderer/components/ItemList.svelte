@@ -2,13 +2,15 @@
     import EqualSectionItem from "./EqualSectionItem.svelte"
     import type { DropDown } from "./item-list/drop_down";
     import Button from "./Button.svelte";
+    import HR from "./HR.svelte"
+    import VR from "./VR.svelte"
 
     export let items: DropDown[] = [];
 </script>
   
 <div class="root">
-    {#each items as item}
-        <div class={`item ${(item.actions && item.actions.length == 0) ? "" : "has-actions"}`} on:click={() => {
+    {#each items as item, index}
+        <div class={`item ${(item.actions && item.actions.length == 0 || !item.actions) ? "" : "has-actions"}`} on:click={() => {
             if (item.on_click && (item.actions && item.actions.length == 0)) {
                 item.on_click();
             }
@@ -26,16 +28,26 @@
                 </div>
             </div>
 
-            <div class="actions">
-                {#if item.actions}
-                    {#each item.actions as action}
+            {#if item.actions}
+                <div class="actions">
+                    {#if item.actions}
                         <EqualSectionItem>
-                            <Button text={action.label} />
+                            {#each item.actions as action, index}
+                                <Button text={action.label} />
+
+                                {#if index != item.actions.length - 1}
+                                    <VR />
+                                {/if}
+                            {/each}
                         </EqualSectionItem>
-                    {/each}
-                {/if}
-            </div>
+                    {/if}
+                </div>
+            {/if}
         </div>
+
+        {#if index != items.length - 1}
+            <HR />
+        {/if}
     {/each}
 </div>
   
@@ -51,13 +63,13 @@
         .item {
             transition-duration: $animation-duration;
             cursor: pointer;
-            outline: $no-stroke;
             display: flex;
             flex: 1;
             gap: $stroke-width;
             padding: $padding;
             user-select: none;
             flex-direction: column;
+            border-radius: $control-radius;
 
             .info {
                 .icon {
@@ -96,7 +108,6 @@
 
             &:hover {
                 background: $control-irritated;
-                border: $stroke;
 
                 &:active {
                     background: $control-clicked;
@@ -105,8 +116,10 @@
 
             &.has-actions {
                 cursor: default;
-                border: $no-stroke;
-                background: transparent !important;
+                
+                &:hover {
+                    background: $control-irritated;
+                }
             }
         }
     }
