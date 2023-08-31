@@ -14,12 +14,26 @@
     let result_items: DropDown[] = [
         {
             label: "First option search result",
-            onOpen: () => {
-                
-            }
+            tags: [
+                "tag1",
+                "tag2",
+                "tag3"
+            ]
         },
         {
-            label: "Second option search result"
+            label: "Second option search result",
+            tags: [
+                "tag1",
+                "tag2",
+                "tag3",
+                "tag4",
+                "tag5",
+                "tag6",
+                "tag7",
+                "tag8",
+                "tag9",
+                "tag10",
+            ]
         }
     ];
 
@@ -36,7 +50,7 @@
     });
 </script>
 
-<div class="root" bind:this={self} on:mouseenter={() => mouse_on_alie = true} on:mouseleave={() => mouse_on_alie = false}>
+<div class={`root ${virtual_focus ? "virtual-focus" : ""}`} bind:this={self} on:mouseenter={() => mouse_on_alie = true} on:mouseleave={() => mouse_on_alie = false}>
     {#if self} 
         <InputTextDropDown for_element={self} items={result_items} show={virtual_focus} />
     {/if}
@@ -55,14 +69,15 @@
         display: flex;
         color: $text-primary;
         padding: $padding;
-        background: $surface-primary;
+        background: $surface-secondary;
         position: relative;
         border-radius: $control-radius;
         -webkit-app-region: no-drag;
         border: $stroke;
         flex: 1;
         width: 400px;
-        
+        transition-duration: $animation-duration;
+
         &:after {
             content: "";
             display: flex;
@@ -82,13 +97,15 @@
         &:hover {
             &:after {
                 width: 25%;
-                opacity: 1;
+                opacity: 0;
             }
         }
 
-        &:focus-within {
+        &.virtual-focus, &:focus-within {
+            background: $surface-primary;
+
             &:after {
-                opacity: 1;
+                opacity: 0;
                 width: 50%;
             }
         }
@@ -99,7 +116,7 @@
 
             input {
                 margin: 0;
-                padding: $padding;
+                padding: 0;
                 outline: none;
                 border: none;
                 display: flex;

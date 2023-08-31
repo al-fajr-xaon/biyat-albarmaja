@@ -37,11 +37,13 @@
             display: flex;
             padding: $padding;
             background: $surface-primary;
-            height: 100%;
+            height: calc(100% - 1px);
             align-items: flex-start;
             justify-content: flex-start;
             flex-direction: column;
             gap: $padding-vertical;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .header.hide {

@@ -62,9 +62,7 @@
         flex-direction: column;
         gap: $padding-vertical;
         font: $font;
-        background: $surface-secondary;
         transition: opacity $animation-duration ease-in-out, transform $animation-duration ease-in-out;
-        overflow: hidden;
         z-index: 100;
 
         &.hide {

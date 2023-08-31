@@ -30,7 +30,7 @@
         user-select: none;
 
         .text, .icon {
-            padding: $padding;
+            padding: 0;
             white-space: nowrap;
         }
 

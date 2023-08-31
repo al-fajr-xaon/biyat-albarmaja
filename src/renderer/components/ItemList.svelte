@@ -56,9 +56,10 @@
                     {#if item.tags}
                         <div class="tags">
                             <HorizontalSection>
-                                <EqualSectionItem>
+                                <EqualSectionItem transparent={true}>
                                     {#each item.tags as tag, index}
                                         <div>
+                                            <div class="bullet"></div>
                                             <span>{tag}</span>
                                         </div>
                 
@@ -116,6 +117,7 @@
             .info {
                 display: flex;
                 flex-direction: row;
+                justify-content: space-between;
 
                 .icon {
                     align-items: center;
@@ -135,12 +137,11 @@
                     flex-direction: column;
                     gap: $padding-vertical;
                     color: $text-secondary;
-                    padding: $padding;
                     border-radius: $control-radius;
 
                     .title {
                         font: $font-primary;
-                        padding: $padding;
+                        padding: 0;
                         color: $text-primary;
                     }
                 }
@@ -153,17 +154,26 @@
 
                 .tags {
                     display: flex;
-                    font: $font;
+                    font: $font-primary;
                     color: $text-secondary;
+                    align-items: center;
+                    background: $surface-secondary;
+                    border-radius: $control-radius;
+                    overflow: hidden;
 
-                    div {
+                    div:not(.bullet) {
                         padding: $padding;
                         border-radius: $control-radius;
                         color: $text-primary;
                         display: flex;
+                        gap: $padding-horizontal;
+                        align-items: center;
 
-                        span {
-                            padding: $padding;
+                        .bullet {
+                            width: 4px;
+                            height: 4px;
+                            border-radius: 100%;
+                            background: $accent-primary;
                         }
                     }
                 }

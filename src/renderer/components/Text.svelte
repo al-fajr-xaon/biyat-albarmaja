@@ -24,7 +24,6 @@
   
     .root {
         display: flex;
-        padding: $padding;
         align-items: center;
         align-self: flex-start;
         -webkit-app-region: no-drag;
@@ -32,7 +31,6 @@
 
         p, h1, span {
             margin: 0;
-            padding: $padding;
         }
 
         &.lined {

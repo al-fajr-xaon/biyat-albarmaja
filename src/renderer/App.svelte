@@ -29,6 +29,7 @@
     <DefinedContentArea>
         <DefinedRow slot="header" titlebar={true}>
             <HorizontalSection>
+                <img src="./assets/icons.svg" width="15px" />
                 <Text line={true}>Integrated Development Environment</Text>
             </HorizontalSection>
 
@@ -66,7 +67,7 @@
 
     .root {
         background: $surface-secondary;
-        width: calc(100vw );
+        width: calc(100vw);
         height: calc(100vh);
         display: flex;
         flex-direction: column;

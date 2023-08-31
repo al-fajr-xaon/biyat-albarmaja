@@ -13,8 +13,8 @@ $no-stroke-color: transparent;
 $no-stroke-width: 1px;
 $no-stroke: $no-stroke-color solid $no-stroke-width;
 
-$padding-vertical: 5px;
-$padding-horizontal: 5px;
+$padding-vertical: 6px;
+$padding-horizontal: 6px;
 $padding: $padding-vertical $padding-horizontal;
 
 $font-size: 8px;
@@ -36,8 +36,9 @@ $accent-text-secondary: #d1d1d1;
 $accent-primary: #000000;
 $accent-secondary: #505050;
 
-$panel-radius: 3px;
-$control-radius: 3px;
+$panel-radius: 6px;
+$control-radius: 4px;
+$shadow: #0000003f;
 
 // Dark
 // $text-primary: #FFFFFF;
@@ -78,5 +79,5 @@ $control-radius: 3px;
 // $accent-primary: #FFFFFF;
 // $accent-secondary: #999999;
 
-// $panel-radius: 3px;
+// $panel-radius: 6px;
 // $control-radius: 3px;

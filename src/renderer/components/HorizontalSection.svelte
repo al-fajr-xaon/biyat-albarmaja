@@ -31,9 +31,24 @@
         }
     }
 
-    function set_scroll_pos(e) {
-        scroll_left = e.target.scrollLeft;
-        scroll_right = e.target.scrollWidth - e.target.clientWidth - scroll_left;
+    function set_scroll(e) {
+        console.log(e.deltaY);
+        scroll_left = frame.scrollLeft;
+
+        e.preventDefault();
+        // frame.scrollLeft = e.deltaY + frame.scrollLeft < 0 ? 0 : e.deltaY + frame.scrollLeft;
+        // animate scroll
+        let multiplier = 1;
+        let max_multiplier = 2;
+        const amount = e.deltaY;
+
+        if (amount < 0) {
+            multiplier = -1;
+        }
+
+        let scroll_amount = 0;
+
+        
     }
 
     onMount(() => {
@@ -42,11 +57,19 @@
         });
 
         resize_observer.observe(frame);
+
+        if (frame) {
+            frame.addEventListener("wheel", set_scroll);
+        }
     });
 
     onDestroy(() => {
         resize_observer.disconnect();
         resize_observer = undefined;
+
+        if (frame) {
+            frame.removeEventListener("wheel", set_scroll);
+        }
     });
 </script>
 
@@ -61,10 +84,7 @@
         {/if}
     </div>
 
-    <div class={`frame ${align}`} bind:this={frame} on:scroll={(e) => {
-        can_scroll = true;
-        set_scroll_pos(e);
-    }}>
+    <div class={`frame ${align}`} bind:this={frame}>
         {#if align == "right"}
             <div class="sub">
                 <slot />
@@ -91,7 +111,6 @@
     .root {
         display: flex;
         flex-direction: row;
-        flex: 1;
         position: relative;
         overflow: hidden;
         align-items: center;
@@ -99,9 +118,7 @@
 
         .button {
             position: absolute;
-            top: 50%;
             z-index: 100;
-            transform: translateY(-50%);
             padding: $padding;
             transition-duration: $animation-duration;
             cursor: pointer;
@@ -111,21 +128,16 @@
             background: $surface-primary;
             border: $stroke;
             -webkit-app-region: no-drag;
-            box-shadow: 0 0 10px 0 $stroke-color;
 
-            &.hide {
+            // &.hide {
                 opacity: 0;
                 pointer-events: none;
-            }
+            // }
 
             &:hover {
                 background: $surface-secondary;
             }
 
-            span {
-                padding: $padding;
-            }
-            
             &.f-start { left: 0; }
             &.f-end { right: 0; }
         }

@@ -1,8 +1,9 @@
 <script lang="ts">
     export let direction: "row" | "column" = "row";
+    export let transparent = false;
 </script>
   
-<div class={`root ${direction}`}>
+<div class={`root ${direction}`} style={transparent ? "background: transparent;" : ""}>
     <slot />
 </div>
   

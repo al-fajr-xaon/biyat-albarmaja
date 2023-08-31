@@ -73,7 +73,7 @@
                 color: $text-primary;
 
                 &:after {
-                    opacity: 1;
+                    opacity: 0;
                     width: 25%;
                 }
             }
@@ -84,12 +84,11 @@
 
                 &:after {
                     width: 50%;
-                    opacity: 1;
+                    opacity: 0;
                 }
             }
 
             span {
-                padding: $padding;
                 white-space: nowrap;
             }
         }

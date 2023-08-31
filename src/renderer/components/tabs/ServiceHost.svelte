@@ -11,7 +11,6 @@
     const animation_duration = 150; //ms
     let timeout_a;
     let timeout_b;
-    let timeout_c;
 
     let leave = false;
     let join = false;
@@ -23,11 +22,11 @@
 
     $: {
         if (!busy && old_active != active) {
+            join = false;
+            leave = false;
             busy = true;
             animations = true;
             hide = false;
-            join = false;
-            leave = false;
 
             tabs.forEach((tab, index) => {
                 if (tab.name == active) {
@@ -40,7 +39,6 @@
 
             clearTimeout(timeout_a);
             clearTimeout(timeout_b);
-            clearTimeout(timeout_c);
 
             animations = true;
             
@@ -51,38 +49,38 @@
 
             timeout_a = setTimeout(() => {
                 hide = true;
-                console.log("A")
+
+                animations = false;
+
+                if (direction == "left")
+                    leave = false;
+                else 
+                    join = false;
+
+                if (direction == "left")
+                    join = true;
+                else
+                    leave = true;
+
+                old_active = active;
+                
+                tabs.forEach((tab, index) => {
+                    if (tab.name == active) {
+                        old_index = index;
+                    }
+                });
 
                 timeout_b = setTimeout(() => {
-                    animations = false;
+                    animations = true;
+                    hide = false;
+                    busy = false;
 
                     if (direction == "left")
-                        leave = false;
-                    else 
                         join = false;
-
-                    if (direction == "left")
-                        join = true;
                     else
-                        leave = true;
-
-                    old_active = active;
-                    
-                    tabs.forEach((tab, index) => {
-                        if (tab.name == active) {
-                            old_index = index;
-                        }
-                    });
-
-                    timeout_c = setTimeout(() => {
-                        animations = true;
-                        hide = false;
-                        busy = false;
-                        join = false;
                         leave = false;
-                    }, animation_duration / 3);
-                }, animation_duration / 3);
-            }, animation_duration / 3);
+                }, 50);
+            }, animation_duration);
         }
     }
 </script>
@@ -112,9 +110,13 @@
 
     .root {
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: $padding-vertical;
+        align-items: flex-start;
 
         &.enable-transition {
-            transition-duration: calc($animation-duration / 3);
+            transition-duration: calc($animation-duration / 2);
         }
 
         &.hide {
@@ -125,7 +127,7 @@
             transform: translateX(-$padding-horizontal);
             opacity: 0;
         }
-
+        
         &.join {
             transform: translateX($padding-horizontal);
             opacity: 0;
