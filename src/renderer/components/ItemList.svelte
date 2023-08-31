@@ -20,9 +20,9 @@
         }}>
             <div class="info">
                 <HorizontalSection>
-                    {#if item.icon}
+                    {#if item.image}
                         <div class="icon">
-                            <img src="https://www.nicepng.com/png/detail/343-3437509_black-office-icon-microsoft-office-icon-black.png" />
+                            <img src={item.image} />
                         </div>
                     {/if}
 
@@ -107,7 +107,6 @@
             transition-duration: $animation-duration;
             cursor: pointer;
             display: flex;
-            flex: 1;
             gap: $padding-vertical;
             padding: $padding;
             user-select: none;
@@ -125,10 +124,15 @@
                     display: flex;
                     align-self: flex-start;
                     padding: $padding;
+                    border: $stroke;
+                    overflow: hidden;
+                    border-radius: $control-radius; 
 
                     img {
                         width: 30px;
                         height: 30px;
+                        border: none;
+                        background: transparent;
                     }
                 }
 

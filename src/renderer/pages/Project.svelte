@@ -9,7 +9,7 @@
     import DefinedContentArea from "../components/DefinedContentArea.svelte"
     import ProjectSourceSBar from "./project/ProjectSourceSBar.svelte"
     import ProjectJobSBar from "./project/ProjectJobSBar.svelte"
-  import Editor from "../components/Editor.svelte"
+    import Editor from "../components/Editor.svelte"
     import Tabs from "../components/Tabs.svelte"
 
     let introductory_modal = false;
@@ -28,6 +28,7 @@
     <Modal bind:show={introductory_modal}>
         <DefinedRow slot="header">
             <HorizontalSection>
+                <img src="./assets/icons.svg" width="15px" />
                 <Text line={true}>Al Fajr Xaon Welcome</Text>
             </HorizontalSection>
 
@@ -41,6 +42,10 @@
 
         <Text type="header">Welcome</Text>
         <Text>Welcome to the Al Fajr Xaon Integrated Development Environment</Text>
+
+        <div style={`display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;`}>
+            <img src="./assets/icons.svg" width="100px" />
+        </div>
     </Modal>
     
     <div class="flex flex-vertical">
@@ -53,7 +58,8 @@
                 <DefinedContentArea>
                     <HorizontalSection slot="header">
                         <Tabs tabs={[
-                            { name: "Main.QB" }
+                            { name: "Main.QB" },
+                            { name: "AFxTA774"}
                         ]} />
                     </HorizontalSection>
                     
@@ -67,7 +73,7 @@
         </div>
 
         <div class="flex flex-1">
-            <Text type="header">No tools are loaded</Text>
+            <Text>Tool Engine is partially implemented! Please drag a frame down to this region</Text>
         </div>
     </div>
 </div>

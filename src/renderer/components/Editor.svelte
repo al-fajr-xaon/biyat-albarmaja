@@ -12,86 +12,9 @@
     let focused = false;
     let typing = false;
 
-    let tokens_editor_raw: EditorFrame[] = [
-        {
-            str_value: ":"
-        },
-        {
-            str_value: "Declare"
-        },
-        {
-            str_value: " "
-        },
-        {
-            str_value: ":"
-        },
-        {
-            str_value: "Function"
-        },
-        {
-            str_value: " "
-        },
-        {
-            str_value: "#"
-        },
-        {
-            str_value: "Very nice main function"
-        },
-        {
-            str_value: " "
-        },
-        {
-            str_value: "("
-        },
-        {
-            str_value: ")"
-        },
-        {
-            str_value: " "
-        },
-        {
-            str_value: ":"
-        },
-        {
-            str_value: "Code block"
-        },
-        {
-            str_value: " "
-        },
-        {
-            str_value: "{"
-        },
-        {
-            str_value: "\n"
-        },
-        {
-            str_value: "\t"
-        },
-        {
-            str_value: ":"
-        },
-        {
-            str_value: "Return"
-        },
-        {
-            str_value: " "
-        },
-        {
-            str_value: "1"
-        },
-        {
-            str_value: "."
-        },
-        {
-            str_value: "\n"
-        },
-        {
-            str_value: "}"
-        },
-        {
-            str_value: "."
-        }
-    ]
+    let tokens_editor_raw: EditorFrame[] = []
+    let errors: EditorFrameException[] = []
+    let warnings: EditorFrameException[] = []
 
     function nest_new_line(tokens: EditorFrame[]) {
         let new_tokens: EditorFrame[][] = [[]];
@@ -123,24 +46,6 @@
     $: {
         tokens_editor = nest_new_line(tokens_editor_raw);
     }
-
-    let errors: EditorFrameException[] = [
-        {
-            name: "No reason",
-            message: "No message",
-            start: { x: 0, y: 0 },
-            end: { x: 10, y: 0 }
-        }
-    ]
-
-    let warnings: EditorFrameException[] = [
-        {
-            name: "No reason",
-            message: "No message",
-            start: { x: 10, y: 0 },
-            end: { x: 11, y: 1 }
-        }
-    ]
 
     function has_error(char_index, line_index) {
         let error_exists = false;
