@@ -31,7 +31,7 @@
     `left: ${client_rect.left}px; top: ${client_rect.bottom + 5}px`,
     `width: ${client_rect.width}px`
 ].join(";")}>
-    <DefinedContentArea>
+    <DefinedContentArea clear_bk={false}>
         <DefinedRow slot="header">
             <HorizontalSection>
                 <Tabs tabs={[
@@ -64,6 +64,10 @@
         font: $font;
         transition: opacity $animation-duration ease-in-out, transform $animation-duration ease-in-out;
         z-index: 100;
+        border: $stroke;
+        border-radius: $control-radius;
+        background: $surface-secondary;
+        padding: $padding;
 
         &.hide {
             opacity: 0;

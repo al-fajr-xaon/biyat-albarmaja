@@ -74,5 +74,6 @@
         align-items: flex-start; 
         position: fixed;
         gap: $padding-vertical;
+        padding: $padding;
     }
 </style>

@@ -6,6 +6,11 @@
     import EqualSectionItem from "../components/EqualSectionItem.svelte"
     import Text from "../components/Text.svelte"
     import Button from "../components/Button.svelte"
+    import DefinedContentArea from "../components/DefinedContentArea.svelte"
+    import ProjectSourceSBar from "./project/ProjectSourceSBar.svelte"
+    import ProjectJobSBar from "./project/ProjectJobSBar.svelte"
+  import Editor from "../components/Editor.svelte"
+    import Tabs from "../components/Tabs.svelte"
 
     let introductory_modal = false;
 
@@ -37,5 +42,71 @@
         <Text type="header">Welcome</Text>
         <Text>Welcome to the Al Fajr Xaon Integrated Development Environment</Text>
     </Modal>
-  <Text type="header"></Text>
+    
+    <div class="flex flex-vertical">
+        <div class="flex flex-2">
+            <div class="flex-1">
+                <ProjectSourceSBar />
+            </div>
+    
+            <div class="flex-3">
+                <DefinedContentArea>
+                    <HorizontalSection slot="header">
+                        <Tabs tabs={[
+                            { name: "Main.QB" }
+                        ]} />
+                    </HorizontalSection>
+                    
+                    <Editor />
+                </DefinedContentArea>
+            </div>
+    
+            <div class="flex-1">
+                <ProjectJobSBar />
+            </div>
+        </div>
+
+        <div class="flex flex-1">
+            <Text type="header">No tools are loaded</Text>
+        </div>
+    </div>
 </div>
+
+<style lang="scss">
+    @import "../assets/config";
+
+    .root {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+
+    .flex {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        gap: $padding-horizontal;
+        height: 100%;
+
+        &.flex-vertical {
+            flex-direction: column;
+        }
+
+        .flex-1 {
+            flex: 1;
+            height: 100%;
+        }
+
+        .flex-2 {
+            flex: 2;
+            height: 100%;
+        }
+
+        .flex-3 {
+            flex: 3;
+            height: 100%;
+            display: flex;
+        }
+    }
+</style>

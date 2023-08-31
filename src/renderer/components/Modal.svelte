@@ -48,6 +48,7 @@
         position: fixed;
         z-index: 100;
         top: 50vh;
+        padding: $padding;
         left: 50vw;
         transform: translate(-50%, -50%);
         box-shadow: 0 0 50px 0 $stroke-color;
@@ -57,6 +58,9 @@
         height: 300px;
         display: flex;
         align-items: flex-start;
+        background: $surface-secondary;
+        border-radius: $panel-radius;
+        border: $stroke;
 
         &.enable-animation {
             transition-duration: $animation-duration;
