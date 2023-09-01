@@ -1,1 +1,0 @@
-<img src="./src/renderer/assets/adrenaline.svg" width="100%">
