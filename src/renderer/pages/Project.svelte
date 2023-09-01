@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { onMount } from "svelte"
     import Modal from "../components/Modal.svelte"
     import DefinedRow from "../components/DefinedRow.svelte"
@@ -11,8 +11,70 @@
     import ProjectJobSBar from "./project/ProjectJobSBar.svelte"
     import Editor from "../components/Editor.svelte"
     import Tabs from "../components/Tabs.svelte"
+    import { SyntaxEngine } from "../components/editor/syntax_engine"
+    import type { EditorFrame, EditorFrameException } from "../components/editor/editor_frame"
 
     let introductory_modal = false;
+    let text_value = "Hello World";
+
+    class CustomSyntaxEngine extends SyntaxEngine<any, any, any> {
+        public lex(text: string): LexerToken<any, any>[] {
+            let tokens = [];
+            text.split(" ").forEach((str) => {
+                tokens.push({
+                    str_value: str
+                })
+
+                tokens.push({
+                    str_value: " "
+                })
+            })
+
+            return tokens;
+        }
+
+        public parse(tokens: LexerToken<TypeEnum, CustomAttachment>[], hydrate_tokens: boolean): { parsed: any[]; hydrated?: LexerToken<TypeEnum, CustomAttachment>[] } {
+            return {
+                parsed: [],
+                hydrated: tokens
+            }
+        }
+
+        public get_editor_sequences(parsed: any[], tokens: LexerToken<TypeEnum, CustomAttachment>[]): { errors: EditorFrameException[]; warnings: EditorFrameException[]; sequences: EditorFrame[] } {
+            let sequences: EditorFrame[] = [];
+            let errors: EditorFrameException[] = [];
+            let warnings: EditorFrameException[] = [];
+            let index_char = 0;
+
+            tokens.forEach((token) => {
+                sequences.push({
+                    str_value: token.str_value
+                });
+
+                if (token.str_value == "Hello") {
+                    errors.push({
+                        start: index_char,
+                        end: index_char + token.str_value.length - 1,
+                        message: "Hello is not a valid keyword"
+                    })
+                }
+
+                index_char += token.str_value.length - 1;
+            })
+
+            return {
+                sequences,
+                errors,
+                warnings
+            }
+        }
+
+        constructor() {
+            super();
+        }
+    }
+
+    const syntax_engine = new CustomSyntaxEngine();
 
     onMount(() => {
         setTimeout(() => {
@@ -63,7 +125,7 @@
                         ]} />
                     </HorizontalSection>
                     
-                    <Editor />
+                    <Editor text_content={text_value} syntax_engine={syntax_engine} />
                 </DefinedContentArea>
             </div>
     

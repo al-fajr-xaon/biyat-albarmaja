@@ -8,4 +8,9 @@ export abstract class SyntaxEngine<TypeEnum, CustomAttachment, ParserNode> {
         parsed: ParserNode<TypeEnum, CustomAttachment>[],
         hydrated?: LexerToken<TypeEnum, CustomAttachment>[],
     };
+    public abstract get_editor_sequences(parsed: ParserNode<TypeEnum, CustomAttachment>[], tokens: LexerToken<TypeEnum, CustomAttachment>[]): {
+        errors: EditorFrameException[],
+        warnings: EditorFrameException[],
+        sequences: EditorFrame[],
+    }
 }

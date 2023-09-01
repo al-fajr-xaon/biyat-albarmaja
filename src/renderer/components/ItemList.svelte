@@ -123,8 +123,6 @@
                     justify-content: center;
                     display: flex;
                     align-self: flex-start;
-                    padding: $padding;
-                    border: $stroke;
                     overflow: hidden;
                     border-radius: $control-radius; 
 

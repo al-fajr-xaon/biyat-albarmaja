@@ -1,8 +1,8 @@
 export interface EditorFrameException {
     name: string;
     message?: string;
-    start: { x: number, y: number },
-    end: { x: number, y: number }
+    start: number;
+    end: number;
 }
 
 export interface EditorFrame {

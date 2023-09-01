@@ -43,30 +43,24 @@
     let current_cursor_pos = [0, 0];
     let mouseover = false;
 
-    $: {
-        tokens_editor = nest_new_line(tokens_editor_raw);
-    }
-
-    function has_error(char_index, line_index) {
+    function has_error(char_index) {
         let error_exists = false;
 
         errors.forEach((error) => {
-            if (line_index == error.start.y && char_index >= error.start.x && char_index <= error.end.x) {
+            if (char_index >= error.start && char_index <= error.end) {
                 error_exists = true;
-            } 
+            }
         });
 
         return error_exists;
     }
 
-    function has_warning(char_index, line_index) {
+    function has_warning(char_index) {
         let warning_exists = false;
 
-        warnings.forEach((warning, index) => {
-            // compare lines
-            if (line_index >= warning.start.y && line_index <= warning.end.y) {
-                // some errors span multiple lines, so if the END is on the line after this, this means everything after the start charachter in this line should be returning true
-                
+        warnings.forEach((warning) => {
+            if (char_index >= warning.start && char_index <= warning.end) {
+                warning_exists = true;
             }
         });
 
@@ -117,9 +111,40 @@
         }
     }
 
+    function get_real_index(char_index, lines: EditorFrame[][]) {
+        let index = char_index;
+
+        const lines_trimmed = lines.slice(0, lines.length - 1);
+        lines_trimmed.forEach((line_raw) => {
+            line_raw.forEach((token) => {
+                index += token.str_value.length;
+            });
+        });
+
+        return index;
+    }
+
+    function load_editor() {
+        const lex_out = syntax_engine.lex(text_content);
+        const parsed = syntax_engine.parse(lex_out, true);
+        const sequences = syntax_engine.get_editor_sequences(parsed.parsed, parsed.hydrated);
+
+        tokens_editor_raw = sequences.sequences;
+        errors = sequences.errors;
+        warnings = sequences.warnings;
+
+        tokens_editor = nest_new_line(tokens_editor_raw);
+    }
+
+    $: {
+        load_editor();
+    }
+
     onMount(() => {
         add_listener("win_key_down", window_key_down);
         add_listener("win_mouse_down", window_mouse_down);
+
+        load_editor();
     });
 
     onDestroy(() => {
@@ -140,8 +165,8 @@
                 <!-- {#each line as token} -->
                     {#each to_char_list(line) as char, char_index}
                         <pre 
-                            class={has_error(char_index, line_index) ? "has-error" : (has_warning(char_index, line_index) ? "has-warning" : "")}
-                            on:mousedown={(e) => {
+                            class={has_error(get_real_index(char_index, tokens_editor)) ? "has-error" : (has_warning(get_real_index(char_index, tokens_editor)) ? "has-warning" : "")}
+                            on:mousedown={() => {
                                 move_cursor(char_index, line_index);
                                 focused = true;
                             }}
