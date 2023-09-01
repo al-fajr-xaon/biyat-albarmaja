@@ -20,6 +20,8 @@
     class CustomSyntaxEngine extends SyntaxEngine<any, any, any> {
         public lex(text: string): LexerToken<any, any>[] {
             let tokens = [];
+
+            text = text.replace(/\n/g, " \n ");
             text.split(" ").forEach((str) => {
                 tokens.push({
                     str_value: str

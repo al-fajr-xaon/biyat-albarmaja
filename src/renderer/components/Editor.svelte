@@ -69,6 +69,16 @@
 
     function move_cursor(x, y) {
         if (!lines) return;
+
+        if (y < 0) return;
+        if (y >= lines.children.length) return;
+        if (x < 0) return;
+        if (x > lines.children[y].children.length - 1) return;
+
+        clearInterval(typing_timeout);
+        typing = true;
+        typing_timeout = setTimeout(() => typing = false, 500);
+
         current_cursor_pos = [x, y];
         const lines_real = lines.children;
         const line = lines_real[y];
@@ -104,7 +114,7 @@
 
         for (let i = 0; i < focused_line; i++) {
             tokens_editor[i].forEach((token) => {
-                index += token.str_value.length;
+                index += token.str_value.length - 1;
             });
         }
 
@@ -137,9 +147,11 @@
             typing = true;
             typing_timeout = setTimeout(() => typing = false, 500);
 
+            move_cursor(current_cursor_pos[0] + 1, current_cursor_pos[1]);
             const index = cord_to_index();
             text_content = insert_to_string(text_content, index, e.key);
-            move_cursor(current_cursor_pos[0] + 1, current_cursor_pos[1]);
+            
+
             load_editor();
 
             console.log(index, text_content)
@@ -149,11 +161,23 @@
             typing = true;
             typing_timeout = setTimeout(() => typing = false, 500);
 
-            const index = cord_to_index(current_cursor_pos);
+            const index = cord_to_index();
             text_content = text_content.slice(0, index - 1) + text_content.slice(index);
             move_cursor(current_cursor_pos[0] - 1, current_cursor_pos[1]);
             load_editor();
+        } else if (e.key == "Enter") {
+            clearInterval(typing_timeout);
+
+            typing = true;
+            typing_timeout = setTimeout(() => typing = false, 500);
+
+            const index = cord_to_index();
+            text_content = insert_to_string(text_content, index, "\n");
+            move_cursor(0, current_cursor_pos[1] + 1);
+            load_editor();
         }
+
+        console.log(text_content)
     }
 
     function get_real_index(char_index, lines: EditorFrame[][]) {
