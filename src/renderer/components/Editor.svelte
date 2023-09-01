@@ -99,7 +99,28 @@
         if (!mouseover) focused = false;
     }
 
+    function cord_to_index() {
+        let index = 0;
+
+        for (let i = 0; i < focused_line; i++) {
+            tokens_editor[i].forEach((token) => {
+                index += token.str_value.length;
+            });
+        }
+
+        index += current_cursor_pos[0];
+
+        return index;
+    }
+
+    function insert_to_string(source, index, insert) {
+        return source.slice(0, index) + insert + source.slice(index);
+    }
+
+    let typing_timeout;
     function window_key_down(e) {
+        if (!focused) return;
+
         if (e.key == "ArrowLeft") {
             move_cursor(current_cursor_pos[0] - 1, current_cursor_pos[1]);
         } else if (e.key == "ArrowRight") {
@@ -108,6 +129,30 @@
             move_cursor(current_cursor_pos[0], current_cursor_pos[1] + 1);
         } else if (e.key == "ArrowDown") {
             move_cursor(current_cursor_pos[0], current_cursor_pos[1] - 1);
+        }
+
+        if (e.key.length == 1) {
+            clearInterval(typing_timeout);
+
+            typing = true;
+            typing_timeout = setTimeout(() => typing = false, 500);
+
+            const index = cord_to_index();
+            text_content = insert_to_string(text_content, index, e.key);
+            move_cursor(current_cursor_pos[0] + 1, current_cursor_pos[1]);
+            load_editor();
+
+            console.log(index, text_content)
+        } else if (e.key == "Backspace") {
+            clearInterval(typing_timeout);
+
+            typing = true;
+            typing_timeout = setTimeout(() => typing = false, 500);
+
+            const index = cord_to_index(current_cursor_pos);
+            text_content = text_content.slice(0, index - 1) + text_content.slice(index);
+            move_cursor(current_cursor_pos[0] - 1, current_cursor_pos[1]);
+            load_editor();
         }
     }
 
@@ -124,7 +169,10 @@
         return index;
     }
 
+    let functioning_text_content = "";
     function load_editor() {
+        if (functioning_text_content == text_content) return;
+
         const lex_out = syntax_engine.lex(text_content);
         const parsed = syntax_engine.parse(lex_out, true);
         const sequences = syntax_engine.get_editor_sequences(parsed.parsed, parsed.hydrated);
@@ -134,6 +182,7 @@
         warnings = sequences.warnings;
 
         tokens_editor = nest_new_line(tokens_editor_raw);
+        functioning_text_content = text_content;
     }
 
     $: {
@@ -251,7 +300,7 @@
             margin: 0;
             padding: 0;
             font: $font-primary;
-            line-height: 30px;
+            line-height: 25px;
             white-space: pre;
 
             &.has-error {

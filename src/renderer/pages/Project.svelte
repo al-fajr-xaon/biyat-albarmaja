@@ -15,7 +15,7 @@
     import type { EditorFrame, EditorFrameException } from "../components/editor/editor_frame"
 
     let introductory_modal = false;
-    let text_value = "Hello World";
+    let text_value = "<Editor text_content={text_value} syntax_engine={syntax_engine} />";
 
     class CustomSyntaxEngine extends SyntaxEngine<any, any, any> {
         public lex(text: string): LexerToken<any, any>[] {
@@ -51,15 +51,21 @@
                     str_value: token.str_value
                 });
 
-                if (token.str_value == "Hello") {
+                if (token.str_value == "<Editor" || token.str_value == "/>") {
                     errors.push({
                         start: index_char,
                         end: index_char + token.str_value.length - 1,
                         message: "Hello is not a valid keyword"
                     })
+                } else if (token.str_value == "syntax_engine={syntax_engine}" || token.str_value == "text_content={text_value}") {
+                    warnings.push({
+                        start: index_char,
+                        end: index_char + token.str_value.length - 1,
+                        message: "This is not a valid syntax engine"
+                    })
                 }
 
-                index_char += token.str_value.length - 1;
+                index_char += token.str_value.length;
             })
 
             return {
@@ -126,6 +132,7 @@
                     </HorizontalSection>
                     
                     <Editor text_content={text_value} syntax_engine={syntax_engine} />
+
                 </DefinedContentArea>
             </div>
     
