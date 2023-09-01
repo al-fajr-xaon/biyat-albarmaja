@@ -1,0 +1,36 @@
+@:LINGUAL :ENVIRONMENT AMERICAN-ENGLISH ## BOOTSTRAP ##
+| Feed ABOVE -> COMPILER [WHEN: NOW]
+- STANDARD ENVIRONMENT
+- REMOVE (AR64 <- AFxTA128)
+- READY [WHEN: NOW]
+- STYLE LOFUN
+
+:include #os.graphics.Frame;
+:include #os.graphics.Editor;
+
+:function #main :code block {
+    :variable #main window = :construct Frame (:object {
+        #title = "Hello World",
+        #size = :object {
+            #width = 1200,
+            #height = 900
+        }
+    });
+
+    :variable #title bar = :construct #Row Panel;
+    :variable #menu bar = :construct #Menu Bar;
+
+    :variable #menu bar file = :construct #Menu Bar Item (:object {
+        #text = "File"
+    });
+
+    #menu bar.append (menu bar file);
+    #title bar.append (menu bar);
+
+    :variable #editor = :construct #Editor (:object {
+        #text = ":debug :print \"Hello World\""
+    });
+
+    #main window.append(#menu bar);
+    #main window.append(#editor);
+};
