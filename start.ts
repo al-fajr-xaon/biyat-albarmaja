@@ -1,6 +1,8 @@
 import electron from "electron";
 import path from "path";
+import { initialize, enable } from "@electron/remote/main";
 
+initialize();
 const app = electron.app;
 
 app.once("ready", () => {
@@ -16,6 +18,8 @@ app.once("ready", () => {
             contextIsolation: false
         }
     });
+
+    enable(main_window.webContents);
 
     main_window.loadFile(path.join(__dirname, "../main.html")).then(() => {
         console.log("Main window loaded successfully");

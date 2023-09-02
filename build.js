@@ -40,17 +40,17 @@ function run() {
     ]);
 }
 
-function build_program(out_file, entry_point, node = false) {
+function build_program(out_file, entry_point) {
     build({
         entryPoints: [entry_point],
         bundle: true,
-        platform: node ? "node" : "browser",
+        platform: "node",
         minify: isProduction,
         sourcemap: !isProduction,
-        target: node ? "es2015" : "es2018",
+        target: "es2018",
         outfile: out_file,
         tsconfig: path.join(__dirname, "tsconfig.json"),
-        external: node ? ["electron"] : [],
+        external: ["electron"],
         define: {
             "process.env.NODE_ENV": `"${process.env.NODE_ENV}"`,
         },
@@ -64,13 +64,12 @@ function build_all() {
 
     build_program(
         "target/electron.js", 
-        path.join(__dirname, "start.ts"),
-        true
+        path.join(__dirname, "start.ts")
     );
 
     build_program(
         "target/main.js",
-        path.join(__dirname, "frames/main.ts")
+        path.join(__dirname, "main.ts")
     );
 }
 
