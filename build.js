@@ -54,7 +54,7 @@ function build_program(out_file, entry_point) {
         define: {
             "process.env.NODE_ENV": `"${process.env.NODE_ENV}"`,
         },
-    }).catch(() => process.exit(1));
+    }).catch((e) => console.error(e));
 }
 
 function build_all() {

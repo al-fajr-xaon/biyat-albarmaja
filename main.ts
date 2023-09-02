@@ -1,8 +1,10 @@
-import { BrowserWindow } from "@electron/remote";
+import { BrowserWindow, getCurrentWindow } from "@electron/remote";
 
 const modal = new BrowserWindow({
     width: 400,
     height: 300,
+    modal: true,
+    parent: getCurrentWindow(),
 });
 
 // load google
