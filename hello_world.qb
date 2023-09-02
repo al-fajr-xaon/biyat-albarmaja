@@ -15,7 +15,7 @@
             #width = 1200,
             #height = 900
         }
-    });
+    }); 
 
     :variable #title bar = :construct #Row Panel;
     :variable #menu bar = :construct #Menu Bar;

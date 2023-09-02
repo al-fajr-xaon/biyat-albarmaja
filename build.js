@@ -1,51 +1,89 @@
 const fs = require("fs");
 const path = require("path");
+const { build } = require("esbuild");
+const chokidar = require("chokidar");
 const spawn = require("child_process").spawn;
 
-exports.copyHTMLFiles = function copyHTMLFiles(source, target, exclude) {
-    if (!fs.existsSync(target)) {
-        fs.mkdirSync(target);
-    }
+const isProduction = process.env.NODE_ENV === "production";
+const watch_mode = process.argv.includes("--watch");
+const run_electron = process.argv.includes("--run");
+let electron_process = null;
 
-    let kill = false;
-    exclude.forEach((excluded_item) => {
-        if (path.join(__dirname, source).startsWith(excluded_item)) {
-            kill = true;
-        }
-    });
-     
-    if (kill) return;
-    console.log(source)
+const exclude = [
+    path.join("./node_modules"),
+    path.join("./target"),
+    path.join("./.git"),
+];
 
-    const files = fs.readdirSync(source);
-
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const filePath = path.join(source, file);
-        const fileStat = fs.lstatSync(filePath);
-
-        if (fileStat.isDirectory()) {
-            if (exclude && exclude.indexOf(filePath) >= 0) {
-                continue;
-            }
-
-            copyHTMLFiles(filePath, path.join(target, file), exclude);
-        } else {
-            if (path.extname(filePath) !== ".html") {
-                continue;
-            }
-
-            fs.copyFileSync(filePath, path.join(target, file));
-        }
+function kill_electron() {
+    if (electron_process) {
+        electron_process.stdin.pause();
+        electron_process.kill();
     }
 }
 
-copyHTMLFiles("./", "target", [path.join(__dirname, "node_modules"), path.join(__dirname, "target")]);
+function run() {
+    kill_electron();
+    electron_process = spawn("npx" + (process.platform === "win32" ? ".cmd" : ""), [
+        "electron",
+        ".",
+    ]);
+}
 
-const tsc = spawn("npx" + (process.platform == "win32" ? ".cmd" : ""), ["tsc", "--project", "./", "--transpile-only"], {
-    stdio: "inherit",
-});
+function build_program(out_file, entry_point, node = false) {
+    build({
+        entryPoints: [entry_point],
+        bundle: true,
+        platform: node ? "node" : "browser",
+        minify: isProduction,
+        sourcemap: !isProduction,
+        target: node ? "es2015" : "es2018",
+        outfile: out_file,
+        tsconfig: path.join(__dirname, "tsconfig.json"),
+        external: node ? ["electron"] : [],
+        define: {
+            "process.env.NODE_ENV": `"${process.env.NODE_ENV}"`,
+        },
+    }).catch(() => process.exit(1));
+}
 
-tsc.on("close", (code) => {
-  console.log(`tsc exited with code ${code}`);
-});
+function build_all() {
+    build_program(
+        "target/electron.js", 
+        path.join(__dirname, "start.ts"),
+        true
+    );
+
+    build_program(
+        "target/main.js",
+        path.join(__dirname, "frames/main.ts")
+    );
+}
+
+if (watch_mode) {
+    chokidar.watch(".", {
+        ignored: exclude,
+        ignoreInitial: true,
+    }).on("all", (event, path) => {
+        console.log(event, path);
+        build_all();
+    });
+
+    chokidar.watch("target").on("all", (event, path) => {
+        if (
+            path.endsWith("electron.js")
+            && run_electron
+        ) {
+            run();
+        }
+    });
+}
+
+build_all();
+if (run_electron) {
+    run();
+}
+
+setTimeout(() => {
+    kill_electron();
+}, 5000);

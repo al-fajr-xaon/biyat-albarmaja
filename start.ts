@@ -5,8 +5,8 @@ const app = electron.app;
 
 app.once("ready", () => {
     const main_window = new electron.BrowserWindow({
-        width: 1800,
-        height: 1000,
+        width: 1200,
+        height: 900,
         frame: false,
         autoHideMenuBar: true,
         show: true,
@@ -17,7 +17,7 @@ app.once("ready", () => {
         }
     });
 
-    main_window.loadFile(path.join(__dirname, "main.html")).then(() => {
+    main_window.loadFile(path.join(__dirname, "../main.html")).then(() => {
         console.log("Main window loaded successfully");
     }).catch((e) => {
         console.error("Failed to load main window", e);

@@ -2,17 +2,18 @@
     "name": "biyat-albarmaja",
     "version": "0.0.0",
     "description": "Integrated software development environment",
-    "main": "target/start.js",
+    "main": "target/electron.js",
     "scripts": {
         "build": "node build.js",
-        "run": "electron .",
-        "build-and-run": "npm run build && npm run run"
+        "main": "electron .",
+        "build-and-run": "npm run build && npm run main"
     },
     "author": "Al Fajr",
     "license": "MIT",
     "dependencies": {
         "chokidar": "^3.5.3",
         "electron": "^26.1.0",
+        "esbuild": "^0.19.2",
         "typescript": "^5.2.2"
     }
 }
