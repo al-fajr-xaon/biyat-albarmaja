@@ -9,6 +9,12 @@ const watch_mode = process.argv.includes("--watch");
 const run_electron = process.argv.includes("--run");
 let electron_process = null;
 
+if (fs.existsSync("target/electron.js")) {
+    fs.renameSync("target/electron.js", "target/electron.js.old");
+} else {
+    fs.writeFileSync("target/electron.js.old", "");
+}
+
 const exclude = [
     path.join("./node_modules"),
     path.join("./target"),
@@ -17,13 +23,17 @@ const exclude = [
 
 function kill_electron() {
     if (electron_process) {
-        electron_process.stdin.pause();
-        electron_process.kill();
+        spawn("taskkill", ["/pid", electron_process.pid, '/f', '/t'], {
+            shell: true,
+            stdio: "inherit",
+        });
     }
 }
 
 function run() {
     kill_electron();
+    console.log("Killed electron remains");
+
     electron_process = spawn("npx" + (process.platform === "win32" ? ".cmd" : ""), [
         "electron",
         ".",
@@ -48,6 +58,10 @@ function build_program(out_file, entry_point, node = false) {
 }
 
 function build_all() {
+    try {
+        fs.writeFileSync("target/electron.js.old", fs.readFileSync("target/electron.js"));
+    } catch (e) {}
+
     build_program(
         "target/electron.js", 
         path.join(__dirname, "start.ts"),
@@ -74,7 +88,11 @@ if (watch_mode) {
             path.endsWith("electron.js")
             && run_electron
         ) {
-            run();
+            const old = fs.readFileSync("target/electron.js.old");
+            const new_ = fs.readFileSync("target/electron.js");
+            if (!old.equals(new_)) {
+                run();
+            }
         }
     });
 }
@@ -83,7 +101,3 @@ build_all();
 if (run_electron) {
     run();
 }
-
-setTimeout(() => {
-    kill_electron();
-}, 5000);

@@ -9,7 +9,7 @@ app.once("ready", () => {
         height: 900,
         frame: false,
         autoHideMenuBar: true,
-        show: true,
+        show: false,
         webPreferences: {
             nodeIntegration: true,
             webSecurity: false,
