@@ -9,9 +9,9 @@ app.once("ready", () => {
     const main_window = new electron.BrowserWindow({
         width: 1200,
         height: 900,
-        frame: false,
+        frame: true,
         autoHideMenuBar: true,
-        show: false,
+        show: true,
         webPreferences: {
             nodeIntegration: true,
             webSecurity: false,
@@ -19,16 +19,12 @@ app.once("ready", () => {
         }
     });
 
-    enable(main_window.webContents);
+    enable(main_window.webContents); 
 
     main_window.loadFile(path.join(__dirname, "../main.html")).then(() => {
         console.log("Main window loaded successfully");
     }).catch((e) => {
         console.error("Failed to load main window", e);
         process.exit(1);
-    });
-
-    main_window.once("ready-to-show", () => {
-        main_window.show();
     });
 });
