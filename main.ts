@@ -8,15 +8,8 @@ const self_frame = new frame.Frame({
 
 self_frame.show = true;
 
-const this_frame = new frame.Frame();
-this_frame.show = true;
+// We have access to the dom, we will control it via special APIs
+const shell_window = self_frame.browser_window;
+const dom_engine = new element.shadow.Shadow(shell_window, new element.Element());
 
-const my_element = new element.Element();
-const root = document.createElement("div");
-
-document.body.appendChild(root);
-
-setInterval(() => {
-    element.shadow.clear(root);
-    element.shadow.install(my_element, root);
-}, 1000);
+dom_engine.clear();

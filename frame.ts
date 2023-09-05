@@ -1,4 +1,5 @@
 import * as electron_remote from "@electron/remote";
+import * as path from "path";
 
 interface Settings {
     modal?: boolean;
@@ -24,6 +25,12 @@ export class Frame {
                 parent: settings.modal ? electron_remote.getCurrentWindow() : undefined,
                 modal: settings.modal,
                 show: false,
+                webPreferences: {
+                    contextIsolation: false,
+                    nodeIntegration: true,
+                    webSecurity: false,
+                    preload: path.join(__dirname, "./target/preload.js"),
+                }
             });
         }
     }
@@ -42,5 +49,9 @@ export class Frame {
 
     public get root_element() {
         
+    }
+
+    public get browser_window() {
+        return this.source_frame;
     }
 }

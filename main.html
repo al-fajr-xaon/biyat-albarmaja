@@ -1,10 +1,32 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electron</title>
-</head>
-<body>
-    <script type="module" src="./target/main.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Electron</title>
+
+        <style>
+            .__script__logo_embelum {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                margin: 0;
+                width: 100vw;
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="__script__logo_embelum">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40.5858 40.5858L50 50L30.5858 69.4142C30.2107 69.7893 29.702 70 29.1716 70H4.82843C3.04662 70 2.15428 67.8457 3.41421 66.5858L18.5858 51.4142C19.3668 50.6332 19.3668 49.3668 18.5858 48.5858L13.4142 43.4142C12.1543 42.1543 13.0466 40 14.8284 40H39.1716C39.702 40 40.2107 40.2107 40.5858 40.5858Z" fill="black"/>
+                <path d="M59.4142 59.4142L50 50L69.4142 30.5858C69.7893 30.2107 70.298 30 70.8284 30H95.1716C96.9534 30 97.8457 32.1543 96.5858 33.4142L81.4142 48.5858C80.6332 49.3668 80.6332 50.6332 81.4142 51.4142L86.5858 56.5858C87.8457 57.8457 86.9534 60 85.1716 60H60.8284C60.298 60 59.7893 59.7893 59.4142 59.4142Z" fill="black"/>
+            </svg>
+        </div>
+        <script type="module" src="./target/main.js"></script>
+    </body>
 </html>

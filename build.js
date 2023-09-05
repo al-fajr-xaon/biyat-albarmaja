@@ -31,7 +31,14 @@ function run() {
     electron_process = spawn("npx" + (process.platform === "win32" ? ".cmd" : ""), [
         "electron",
         ".",
-    ]);
+    ], {
+        shell: true,
+        stdio: "inherit",
+    });
+
+    // electron_process.on("close", (code) => {
+    //     run();
+    // });
 }
 
 function build_program(out_file, entry_point, callback) {
@@ -66,14 +73,21 @@ function build_all() {
         path.join(__dirname, "main.ts"),
         () => {
             build_program(
-                "target/electron.js", 
+                "target/electron.js",
                 path.join(__dirname, "start.ts"),
                 () => {
-                    if (run_electron) {
-                        run();
-                    }
+                    build_program(
+                        "target/preload.js",
+                        path.join(__dirname, "preload.ts"),
+                        () => {
+                            console.log("Build complete");
+                            if (run_electron) {
+                                run();
+                            }
+                        }
+                    );
                 }
-            );      
+            ); 
         }
     );
 }
