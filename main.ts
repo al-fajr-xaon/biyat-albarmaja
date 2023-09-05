@@ -1,15 +1,18 @@
 import * as frame from "./frame";
-import * as element from "./element";
 import * as electron_remote from "@electron/remote";
 
 const self_frame = new frame.Frame({
     pre_existing_window: electron_remote.getCurrentWindow()
 });
 
+self_frame.title = "Integrated Development Environment";
+self_frame.size = [1700, 800];
+self_frame.center_to_display();
+
+self_frame.dev_tools_open = true;
+self_frame.dom_engine.console.warn("Running program in developer mode");
+self_frame.dev_tools_open = true;
+
+self_frame.dom_engine.clear();
+
 self_frame.show = true;
-
-// We have access to the dom, we will control it via special APIs
-const shell_window = self_frame.browser_window;
-const dom_engine = new element.shadow.Shadow(shell_window, new element.Element());
-
-dom_engine.clear();
